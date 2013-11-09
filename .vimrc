@@ -10,8 +10,8 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 "My Bundles
-Bundle 'Rip-Rip/clang_complete'
 Bundle 'scrooloose/syntastic'
+Bundle 'Valloric/YouCompleteMe'
 
 "Syntax and numbering
 syntax on 
