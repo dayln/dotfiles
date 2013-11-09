@@ -11,6 +11,7 @@ Bundle 'gmarik/vundle'
 
 "My Bundles
 Bundle 'Rip-Rip/clang_complete'
+Bundle 'scrooloose/syntastic'
 
 "Syntax and numbering
 syntax on 
@@ -25,3 +26,5 @@ set smartindent
 "Getting backspace to semi-work in os x
 set backspace=indent,eol,start
 fixdel
+
+
