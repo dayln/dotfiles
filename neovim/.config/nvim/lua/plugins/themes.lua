@@ -1,11 +1,15 @@
 return {
   {
-    'AlexvZyl/nordic.nvim',
+    'rebelot/kanagawa.nvim',
     priority = 1000,
+    opts = {
+      compile = true,
+    },
     init = function()
-      vim.cmd.colorscheme 'nordic'
+      vim.cmd.colorscheme 'kanagawa-dragon'
     end,
   },
+  'AlexvZyl/nordic.nvim',
 
   -- Additional themes
   'navarasu/onedark.nvim',
