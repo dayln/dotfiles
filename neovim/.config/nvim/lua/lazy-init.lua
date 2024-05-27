@@ -10,7 +10,6 @@ require('lazy').setup {
   -- Consider moving plugins/lang to lang
   spec = {
     { import = 'plugins' },
-    { import = 'plugins/lang' },
   },
   checker = { enabled = true },
 }
