@@ -37,12 +37,13 @@ default_border pixel
 font pango:JetBrains Mono, FontAwesome 10
 
 # setup monitors
-exec_always xrandr --output DP-0 --mode 2560x1440 --rate 165
-exec_always xrandr --output DP-2 --mode 2560x1440 --rate 165
-exec_always xrandr --output DP-2 --auto --right-of DP-0
+exec_always --no-startup-id picom
+exec_always --no-startup-id xrandr --output DP-0 --mode 2560x1440 --rate 165
+exec_always --no-startup-id xrandr --output DP-2 --mode 2560x1440 --rate 165
+exec_always --no-startup-id xrandr --output DP-2 --auto --right-of DP-0
 
 # Wallpaper
-exec_always feh --bg-fill --randomize ~/.wallpaper/*
+exec_always --no-startup-id feh --bg-fill --randomize ~/.wallpaper/*
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
