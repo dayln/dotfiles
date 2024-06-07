@@ -7,7 +7,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
   -- Need to have separate modules for opts merge to occur
-  -- Consider moving plugins/lang to lang
   spec = {
     { import = 'plugins' },
   },
