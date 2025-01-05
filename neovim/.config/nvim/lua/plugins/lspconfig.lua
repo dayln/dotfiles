@@ -2,41 +2,34 @@ return {
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'williamboman/mason.nvim', config = true },
+      'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-      -- used for completion, annotations and signatures of Neovim apis
-      { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
       vim.lsp.inlay_hint.enable(true)
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
         callback = function(event)
-          local map = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          local map = function(keys, func, desc, mode)
+            mode = mode or 'n'
+            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          local imap = function(keys, func, desc)
-            vim.keymap.set('i', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-          end
-
-          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-          map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-          map('<leader>cr', vim.lsp.buf.rename, '[R]ename')
-          map('<leader>cc', vim.lsp.codelens.run, '[C]odelens')
-          map('<leader>cC', vim.lsp.codelens.run, '[C]odelens Refresh')
-          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-          map('K', vim.lsp.buf.hover, 'Hover Documentation')
-          imap('<C-k>', vim.lsp.buf.hover, 'Hover Documentation')
-          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('<leader>cl', '<cmd>LspInfo<cr>', 'Lsp Info')
+          map('gd', vim.lsp.buf.definition, 'Goto Definition')
+          map('gr', vim.lsp.buf.references, 'References')
+          map('gI', vim.lsp.buf.implementation, 'Goto Implementation')
+          map('gy', vim.lsp.buf.type_definition, 'Goto T[y]pe Definition')
+          map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
+          map('K', vim.lsp.buf.hover, 'Hover')
+          map('gK', vim.lsp.buf.signature_help, 'Signature Help')
+          map('<c-k>', vim.lsp.buf.signature_help, 'Signature Help', 'i')
+          map('<leader>ca', vim.lsp.buf.code_action, 'Code Action', { 'n', 'v' })
+          map('<leader>cc', vim.lsp.codelens.run, 'Run Codelens', { 'n', 'v' })
+          map('<leader>cC', vim.lsp.codelens.refresh, 'Refresh & Display Codelens')
+          map('<leader>cR', Snacks.rename.rename_file, 'Rename File')
+          map('<leader>cr', vim.lsp.buf.rename, 'Rename')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.server_capabilities.documentHighlightProvider then
@@ -168,9 +161,9 @@ return {
         'goimports',
         'gofumpt',
       })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
       require('mason-lspconfig').setup {
+        automatic_installation = false,
+        ensure_installed = ensure_installed,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}

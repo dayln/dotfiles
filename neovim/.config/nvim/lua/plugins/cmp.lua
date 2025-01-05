@@ -27,6 +27,17 @@ return {
           },
         },
       },
+      {
+        'folke/lazydev.nvim',
+        ft = 'lua', -- only load on lua files
+        opts = {
+          library = {
+            -- See the configuration section for more details
+            -- Load luvit types when the `vim.uv` word is found
+            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+          },
+        },
+      },
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
@@ -88,6 +99,7 @@ return {
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'buffer' },
+          { name = 'lazydev' },
         },
         formatting = {
           expandable_indicator = true,
